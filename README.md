@@ -13,7 +13,7 @@ The following folders contain VHDL circuit description that can be synthesized a
 
 5. Approaching Cell: From the same EU Visualise project collaboration, this second functionality was implemented by Hongjie Liu and RTC-Lab including an intership in 2017.
 
-6. Exmaple Project Object Trackers and OMC: This folder contains all the source files needed to implement the system described in (IEEEACCESS: https://doi.org/10.1109/ACCESS.2019.2941282). This system has been tested in the AERtools platforms designed by RTC-Lab and manufactured by COBER S.L. (www.t-cober.es)
+6. Example Project Object Trackers and OMC: This folder contains all the source files needed to implement the system described in (IEEEACCESS: https://doi.org/10.1109/ACCESS.2019.2941282). This system has been tested in the AERtools platforms designed by RTC-Lab and manufactured by COBER S.L. (www.t-cober.es)
 
 7. WordSerial-DAVIS to PAER-CAVIAR translator: These VHDL files contains the needed logic to translate the AER format used in the DAVIS to the AER format used in CAVIAR connectors, boards and chips, which is compatible with ROME 20-pin one. 
 
