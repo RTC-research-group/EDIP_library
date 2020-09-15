@@ -1,0 +1,194 @@
+C51 COMPILER V7.06   USB_DESCRIPTOR                                                        09/12/2019 10:41:16 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE USB_DESCRIPTOR
+OBJECT MODULE PLACED IN USB_DESCRIPTOR.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\c51.exe USB_DESCRIPTOR.c DB OE
+
+stmt level    source
+
+   1          /*
+   2          
+   3             File:    USB_DESCRIPTOR.c
+   4             Author:  DM
+   5             Created: 11/22/02
+   6          
+   7             Target Device: C8051F320
+   8          
+   9             Source file for USB firmware. Includes descriptor data.
+  10          
+  11             Functions:
+  12             None
+  13          
+  14          */
+  15          #include <C8051F320.H>
+  16          #include "USB_REGISTER.h"
+  17          #include "micro.h"
+  18          #include "USB_DESCRIPTOR.h"
+  19          
+  20          //---------------------------
+  21          // Descriptor Declarations
+  22          //---------------------------
+  23          const device_descriptor DeviceDesc = 
+  24          {
+  25             18,                  // bLength
+  26             0x01,                // bDescriptorType
+  27             0x1001,              // bcdUSB
+  28             0x00,                // bDeviceClass
+  29             0x00,                // bDeviceSubClass
+  30             0x00,                // bDeviceProtocol
+  31             EP0_PACKET_SIZE,     // bMaxPacketSize0
+  32             0xC410,              // idVendor
+  33             0x0000,              // idProduct 
+  34             0x0000,              // bcdDevice 
+  35             0x01,                // iManufacturer
+  36             0x02,                // iProduct     
+  37             0x00,                // iSerialNumber
+  38             0x01                 // bNumConfigurations
+  39          }; //end of DeviceDesc
+  40          
+  41          const configuration_descriptor ConfigDesc = 
+  42          {
+  43             0x09,                // Length
+  44             0x02,                // Type
+  45             0x2000,              // Totallength
+  46             0x01,                // NumInterfaces
+  47             0x01,                // bConfigurationValue
+  48             0x00,                // iConfiguration
+  49             0x80,                // bmAttributes
+  50             0x0F                 // MaxPower
+  51          }; //end of ConfigDesc
+  52          
+  53          const interface_descriptor InterfaceDesc =
+  54          {
+  55             0x09,                // bLength
+C51 COMPILER V7.06   USB_DESCRIPTOR                                                        09/12/2019 10:41:16 PAGE 2   
+
+  56             0x04,                // bDescriptorType
+  57             0x00,                // bInterfaceNumber
+  58             0x00,                // bAlternateSetting
+  59             0x02,                // bNumEndpoints
+  60             0x00,                // bInterfaceClass
+  61             0x00,                // bInterfaceSubClass
+  62             0x00,                // bInterfaceProcotol
+  63             0x00                 // iInterface
+  64          }; //end of InterfaceDesc
+  65          
+  66          const endpoint_descriptor Endpoint1Desc =
+  67          {
+  68             0x07,                // bLength
+  69             0x05,                // bDescriptorType
+  70             0x81,                // bEndpointAddress
+  71             0x02,                // bmAttributes
+  72             EP1_PACKET_SIZE_LE,  // MaxPacketSize (LITTLE ENDIAN)
+  73             00                   // bInterval
+  74          }; //end of Endpoint1Desc
+  75          
+  76          const endpoint_descriptor Endpoint2Desc =
+  77          {
+  78             0x07,                // bLength
+  79             0x05,                // bDescriptorType
+  80             0x02,                // bEndpointAddress
+  81             0x02,                // bmAttributes
+  82             EP2_PACKET_SIZE_LE,  // MaxPacketSize (LITTLE ENDIAN)
+  83             00                   // bInterval
+  84          }; //end of Endpoint2Desc
+  85          
+  86          #define STR0LEN 4
+  87          
+  88          code const BYTE String0Desc[STR0LEN] =
+  89          {
+  90             STR0LEN, 0x03, 0x09, 0x04
+  91          }; //end of String0Desc
+  92          
+  93          #define STR1LEN sizeof("UNIVERSIDAD DE SEVILLA.ATC")*2
+  94          
+  95          code const BYTE String1Desc[STR1LEN] =
+  96          {
+  97             STR1LEN, 0x03,
+  98             'U', 0,
+  99             'N', 0,
+ 100             'I', 0,
+ 101             'V', 0,
+ 102             'E', 0,
+ 103             'R', 0,
+ 104             'S', 0,
+ 105             'I', 0,
+ 106             'D', 0,
+ 107             'A', 0,
+ 108             'D', 0,
+ 109             ' ', 0,
+ 110             'D', 0,
+ 111             'E', 0,
+ 112             ' ', 0,
+ 113             'S', 0,
+ 114             'E', 0,
+ 115             'V', 0,
+ 116             'I', 0,
+ 117             'L', 0,
+C51 COMPILER V7.06   USB_DESCRIPTOR                                                        09/12/2019 10:41:16 PAGE 3   
+
+ 118             'L', 0,
+ 119             'A', 0,
+ 120             '.', 0,
+ 121             'A', 0,
+ 122             'T', 0,
+ 123             'C', 0
+ 124          }; //end of String1Desc
+ 125          
+ 126          //#define STR2LEN sizeof("C8051F320 MAPPER. CAVIAR.  ")*2
+ 127          
+ 128          code const BYTE String2Desc[STR2LEN]  =
+ 129          {
+ 130             STR2LEN, 0x03,
+ 131             'C', 0,
+ 132             '8', 0,
+ 133             '0', 0,
+ 134             '5', 0,
+ 135             '1', 0,
+ 136             'F', 0,
+ 137             '3', 0,
+ 138             '2', 0,
+ 139             '0', 0,
+ 140             ' ', 0,
+ 141             'M', 0,
+ 142             'A', 0,
+ 143             'P', 0,
+ 144             'P', 0,
+ 145             'E', 0,
+ 146             'R', 0,
+ 147             '.', 0,
+ 148             'C', 0,
+ 149             'A', 0,
+ 150             'V', 0,
+ 151             'I', 0,
+ 152             'A', 0,
+ 153             'R', 0,
+ 154             '.', 0,
+ 155             ' ', 0,
+ 156             ' ', 0,
+ 157             ' ', 0
+ 158          }; //end of String2Desc
+ 159          
+ 160          code const BYTE String2DescF[STR2LEN] _at_ 0x3A00;
+ 161          
+ 162          BYTE* const StringDescTable[] = 
+ 163          {
+ 164             String0Desc,
+ 165             String1Desc,
+ 166             String2DescF
+ 167          };
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =    164    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

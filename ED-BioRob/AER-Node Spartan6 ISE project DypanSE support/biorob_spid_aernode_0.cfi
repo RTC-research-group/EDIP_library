@@ -1,0 +1,14 @@
+# PROMGEN: Xilinx Prom Generator P.20131013
+# Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+SOFTWARE_VERSION P.20131013
+DATE            09/19/2018 - 15:50
+SOURCE          C:\Users\biorob-nas\Desktop\ISE_spike_SPID_BioRob_AERNode\biorob_spid_aernode_0.mcs
+DEVICE          XCF32P
+DATA_WIDTH      8
+FILL_DATA       0xFF
+SIGNATURE       0x00BB7996
+BLOCK 0 VERSION 0 0x10472443
+BLOCK 1 VERSION 0 0x10472443
+BLOCK 2 VERSION 0 0x10472443
+BLOCK 3 VERSION 0 0x10472443

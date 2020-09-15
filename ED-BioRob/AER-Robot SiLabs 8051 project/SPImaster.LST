@@ -1,0 +1,80 @@
+C51 COMPILER V7.05   SPIMASTER                                                             06/06/2006 16:44:30 PAGE 1   
+
+
+C51 COMPILER V7.05, COMPILATION OF MODULE SPIMASTER
+OBJECT MODULE PLACED IN SPImaster.OBJ
+COMPILER INVOKED BY: C:\SiLabs\MCU\IDEfiles\C51\BIN\C51.exe SPImaster.c DB OE
+
+stmt level    source
+
+   1          // V 2.1
+   2          // (C) Rafa Paz, Anton Civit, Gabriel Jimenez
+   3          //  (C) Dep. ATC
+   4          //  (C) Universidad de Sevilla
+   5          
+   6          
+   7          #include <c8051F320.h>
+   8          #include "SPImaster.h"
+   9          #include <stdio.h>
+  10          #include <intrins.h>
+  11          
+  12          
+  13          char MMCpresent(void)
+  14          {
+  15   1      return (char) MMC_P;
+  16   1      } 
+  17            
+  18          void RaiseSS(){
+  19   1        SPI0CFG|=0x08;
+  20   1      }
+  21          
+  22          void LowerSS(){
+  23   1        SPI0CFG&=0xF7;
+  24   1      }
+  25          
+  26          
+  27          void Init_MMC_Ports()
+  28          {
+  29   1      SPI0CFG=0x70; //Master. CKPHA=1 CKPOL=1
+  30   1      SPI0CKR=0; // SPI CLK= SYSCLK/2. Do not decrease.
+  31   1      SPI0CN=0xD; //1101b 4 Wire Master. MMC_SS=1.Enable SPI
+  32   1      }
+  33          
+  34          //SendByte - in SPI MASTER fashion
+  35          //will READ a byte everytime it writes a byte
+  36          char SendByte(char byte){
+  37   1      
+  38   1        while(!TXBMT);  //wait for xmit buffer empty
+  39   1        SPI0DAT=byte;
+  40   1        while(!SPIF); //wait for end of transmition
+  41   1        SPIF=0;  //clear SPIF
+  42   1        
+  43   1        return SPI0DAT;
+  44   1      }
+  45          
+  46          void vSendByte(char byte){
+  47   1      
+  48   1        while(!TXBMT);  //wait for xmit buffer empty
+  49   1       
+  50   1       SPI0DAT=byte;
+  51   1        while(!SPIF); //wait for end of transmition
+  52   1       SPIF=0;  //clear SPIF
+  53   1        
+  54   1      //  return SPI0DAT;
+  55   1      }
+C51 COMPILER V7.05   SPIMASTER                                                             06/06/2006 16:44:30 PAGE 2   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     48    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,5 @@
+"C:\Users\biorob-nas\Desktop\Silabs_Code\micro.obj",
+"C:\Users\biorob-nas\Desktop\Silabs_Code\cyg_aux.obj",
+"C:\Users\biorob-nas\Desktop\Silabs_Code\USB_DESCRIPTOR.obj",
+"C:\Users\biorob-nas\Desktop\Silabs_Code\USB_ISR.obj",
+"C:\Users\biorob-nas\Desktop\Silabs_Code\USB_STD_REQ.obj"  TO "C:\Users\biorob-nas\Desktop\Silabs_Code\lenval" RS(256)PL(68) PW(78) 

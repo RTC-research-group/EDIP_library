@@ -1,0 +1,309 @@
+C51 COMPILER V7.05   MMCPIPE                                                               06/06/2006 16:44:30 PAGE 1   
+
+
+C51 COMPILER V7.05, COMPILATION OF MODULE MMCPIPE
+OBJECT MODULE PLACED IN MMCpipe.OBJ
+COMPILER INVOKED BY: C:\SiLabs\MCU\IDEfiles\C51\BIN\C51.exe MMCpipe.c DB OE
+
+stmt level    source
+
+   1          /*   MMC.c -
+   2          /*   Daniel Riiff
+   3          /*   
+   4          /*   Contains the implementation of commands needed
+   5          /*   to interface with the SPI interface of MMC card */
+   6          
+   7          
+   8          #include <c8051f320.h>
+   9          //#include <stdio.h>
+  10          #include <intrins.h>
+  11          #include "SPImaster.h"
+  12          #include "MMC.h"
+  13          #include "micro.h"
+  14          #include <string.h>
+  15          
+  16          
+  17          long MMCbase=MMC_BASE; //Address for the first MMC sequential access.
+  18          extern xdata unsigned char sector[512];
+  19          
+  20          char InitMMC(void){
+  21   1        //raise SS and MOSI for 80 clock cycles
+  22   1        //SendByte(0xff) 10 times with SS high
+  23   1        //RAISE SS
+  24   1        char i;
+  25   1        char response=0x01;
+  26   1        //initialization sequence on PowerUp
+  27   1        RaiseSS();
+  28   1        for( i=0;i<=9;i++)
+  29   1          vSendByte(0xff);
+  30   1        LowerSS();  
+  31   1        //Send Command 0 to put MMC in SPI mode
+  32   1        SendCmd(0x00,0,0x95);
+  33   1        //Now wait for READY RESPONSE
+  34   1        //response=MMCgetResponse();
+  35   1        response=MMCgetResponse();
+  36   1        if(response!=0x01)
+  37   1          return 0;
+  38   1        
+  39   1        while(response==0x01){
+  40   2       //   printf("\n Sending Command 1\n");
+  41   2          RaiseSS();
+  42   2          vSendByte(0xff);
+  43   2          LowerSS();
+  44   2          SendCmd(0x01,0x00ffc000,0xff);
+  45   2          response=MMCgetResponse();
+  46   2        } 
+  47   1        if(response==0x00)
+  48   1       //   printf("RESPONSE WAS GOOD\n"); 
+  49   1        
+  50   1        RaiseSS();
+  51   1        vSendByte(0xff);
+  52   1        
+  53   1       // printf("MMC INITIALIZED AND SET TO SPI MODE PROPERLY.\n");
+  54   1        return -1;  
+  55   1      }
+C51 COMPILER V7.05   MMCPIPE                                                               06/06/2006 16:44:30 PAGE 2   
+
+  56          
+  57          char MMCgetResponse(){
+  58   1        //Response comes 1-8bytes after command
+  59   1        //the first bit will be a 0
+  60   1        //followed by an error code
+  61   1        //data will be 0xff until response
+  62   1        char i=0;
+  63   1        char response;
+  64   1        
+  65   1        while(i<=32){//originalmente i<=8
+  66   2          response=SendByte(0xff);
+  67   2          if(response==0x00)
+  68   2            break;
+  69   2          if(response==0x01)
+  70   2            break;
+  71   2          i++;
+  72   2        }
+  73   1        return response;
+  74   1      }
+  75          
+  76          void SendCmd(char command, long argument, char CRC){
+  77   1        //idata char cmd[6];
+  78   1        char temp;
+  79   1        char i;
+  80   1       while(!TXBMT);  //wait for xmit buffer empty
+  81   1       
+  82   1       SPI0DAT=command|0x40;
+  83   1        
+  84   1        
+  85   1        for(i=24;i>=0;i-=8){
+  86   2          temp=(argument>>(i));
+  87   2              
+  88   2              while(!TXBMT);  //wait for xmit buffer empty
+  89   2       
+  90   2              SPI0DAT=temp;
+  91   2        }
+  92   1              while(!SPIF); //wait for end of transmition
+  93   1              SPIF=0;  //clear SPIF
+  94   1       while(!TXBMT);  //wait for xmit buffer empty
+  95   1       
+  96   1       SPI0DAT=CRC;
+  97   1        while(!SPIF); //wait for end of transmition
+  98   1       SPIF=0;  //clear SPIF
+  99   1          
+ 100   1      }
+ 101          
+ 102          //WRITE a BLOCK starting at address
+ 103          /*char MMCwriteBlock(char *Block, long address){
+ 104            char busy,dataResp;
+ 105            int count;
+ 106            //Block size is 512 bytes exactly
+ 107            //First Lower SS
+ 108            LowerSS();
+ 109            //Then send write command
+ 110            SendCmd(24,address,0xff);
+ 111            if(MMCgetResponse()==00){
+ 112              //command was a success - now send data
+ 113              //start with DATA TOKEN = 0xFE
+ 114              SendByte(0xfe);
+ 115              //now send data
+ 116              for( count=0;count<512;count++){
+ 117                SendByte(Block[count]);
+C51 COMPILER V7.05   MMCPIPE                                                               06/06/2006 16:44:30 PAGE 3   
+
+ 118              }
+ 119              //data block sent - now send checksum
+ 120              SendByte(0xff);
+ 121              SendByte(0xff);
+ 122              //Now read in the DATA RESPONSE token
+ 123              dataResp=SendByte(0xff);
+ 124              //Following the DATA RESPONSE token
+ 125              //are a number of BUSY bytes
+ 126              //a zero byte indicates the MMC is busy
+ 127              busy=SendByte(0xff);
+ 128              while(busy==0){
+ 129                busy=SendByte(0xff);
+ 130              }
+ 131              dataResp=dataResp&0x0f;     //mask the high byte of the DATA RESPONSE token
+ 132              RaiseSS();
+ 133              SendByte(0xff);
+ 134              if(dataResp==0x0b){
+ 135                printf("DATA WAS NOT ACCEPTED BY CARD -- CRC ERROR\n");
+ 136                return 0;
+ 137                }
+ 138              if(dataResp==0x05)
+ 139                return -1;
+ 140                
+ 141              printf("Invalid data Response token.");
+ 142              return 0;
+ 143           }
+ 144            printf("Command 24 (Write) was not received by the MMC.\n");
+ 145            return 0;
+ 146          }
+ 147          */
+ 148          //READ a BLOCK starting at address
+ 149          char MMCreadBlock(char *Block, long address){
+ 150   1      unsigned  char dataResp,i,rc;
+ 151   1        int count;
+ 152   1        //Block size is 512 bytes exactly
+ 153   1        //First Lower SS
+ 154   1        LowerSS();
+ 155   1        //Then send read command
+ 156   1        SendCmd(17,address,0xff);
+ 157   1        rc=0;
+ 158   1        if(MMCgetResponse()==00){
+ 159   2              //command was a success - now send data
+ 160   2              //read start with DATA TOKEN = 0xFE
+ 161   2                      for(i=0;i<256;i++)
+ 162   2                              {
+ 163   3                              dataResp=SendByte(0xff);
+ 164   3                              if(dataResp==0xFE) {rc=1;break;}
+ 165   3                              }
+ 166   2              }
+ 167   1          //now send data
+ 168   1        if(rc)
+ 169   1              {
+ 170   2          for( count=0;count<512;count++) Block[count]=SendByte(0xff);
+ 171   2          }
+ 172   1          //data block sent - now send checksum
+ 173   1          SendByte(0xff);
+ 174   1          SendByte(0xff);
+ 175   1          //DELAY_U;
+ 176   1              dataResp=SendByte(0xff);
+ 177   1              for(count=0;count<1024;count++)
+ 178   1                      {dataResp=SendByte(0xff);if(dataResp)break;}
+ 179   1              //Now read in the DATA RESPONSE token
+C51 COMPILER V7.05   MMCPIPE                                                               06/06/2006 16:44:30 PAGE 4   
+
+ 180   1            RaiseSS();
+ 181   1          return rc;
+ 182   1       }
+ 183          
+ 184          
+ 185          char MMCreadBlockSeq(char *Block)
+ 186          {
+ 187   1      char rc;
+ 188   1      
+ 189   1      rc=MMCreadBlock(Block,MMCbase);
+ 190   1      MMCbase+=512;
+ 191   1      return rc;
+ 192   1      }
+ 193          //READ a BLOCK starting at address
+ 194          
+ 195          
+ 196           void MMCchangeBase(long address)
+ 197           {
+ 198   1       MMCbase=address;
+ 199   1       }
+ 200          
+ 201          
+ 202          long MMCgetFirst(char *filename, long *lenght)
+ 203          {
+ 204   1      
+ 205   1      unsigned long longitud;
+ 206   1      
+ 207   1      unsigned long first_add=0;
+ 208   1      unsigned char FATcopies;
+ 209   1      unsigned int  sectors_per_FAT,res_sectors,Root_entries;
+ 210   1      unsigned char sectors_per_cluster;
+ 211   1      unsigned long first_root_offset;
+ 212   1      unsigned int num_root_sectors=0;
+ 213   1      unsigned int initial_cluster=0;
+ 214   1      int j,k;
+ 215   1      
+ 216   1      
+ 217   1      MMCchangeBase(0); //Change base to boot sector
+ 218   1      MMCreadBlockSeq(sector);
+ 219   1      if(sector[0]==0)
+ 220   1      {
+ 221   2              first_add+=(long)sector[0x1c6];
+ 222   2              first_add+=(long)sector[0x1c7]<<8;
+ 223   2              first_add<<=9;
+ 224   2              
+ 225   2              MMCbase=first_add;
+ 226   2              MMCreadBlockSeq(sector);
+ 227   2                      
+ 228   2      }
+ 229   1      
+ 230   1      sectors_per_cluster=sector[0x0D];
+ 231   1      
+ 232   1      res_sectors=sector[0xe]; //Reserved sectors low
+ 233   1      res_sectors+=(unsigned int)sector[0xf]<<8; //Reserved sectors
+ 234   1      FATcopies=sector[0x10]; //FAT copies
+ 235   1      Root_entries=sector[0x11]; 
+ 236   1      Root_entries+=(unsigned int)sector[0x12]<<8; //Root entries
+ 237   1      
+ 238   1      num_root_sectors = Root_entries >> 4; // Num of sector that use ROOT
+ 239   1      sectors_per_FAT=sector[0x16]; 
+ 240   1      sectors_per_FAT+=(unsigned int)sector[0x13]<<8; //Sectors per Fat offset 16/17H
+ 241   1      
+C51 COMPILER V7.05   MMCPIPE                                                               06/06/2006 16:44:30 PAGE 5   
+
+ 242   1      first_add+=(unsigned long)(res_sectors)<<9;
+ 243   1      first_add+=((unsigned long)(FATcopies)*sectors_per_FAT)<<9;
+ 244   1      
+ 245   1      first_root_offset = first_add; //offset of the first root sector
+ 246   1      
+ 247   1      first_add+=(unsigned long)(Root_entries)<<5;
+ 248   1      
+ 249   1      
+ 250   1      for(k=0;k<num_root_sectors;k++)
+ 251   1      {
+ 252   2              MMCbase=first_root_offset+(k<<9);
+ 253   2              MMCreadBlockSeq(sector);
+ 254   2              for(j=0;j<512;j+=32)
+ 255   2                      {
+ 256   3                      if(memcmp(filename,&sector[j],11)==0) // Si encontrado
+ 257   3                              {
+ 258   4                              initial_cluster=(unsigned int)sector[j+0x1a];
+ 259   4                              initial_cluster+=(unsigned int)sector[j+0x1b]<<8;
+ 260   4                              longitud=(unsigned long)sector[j+0x1c];
+ 261   4                              longitud+=(unsigned long)sector[j+0x1d]<<8;
+ 262   4                              longitud+=(unsigned long)sector[j+0x1e]<<16;
+ 263   4                              longitud+=(unsigned long)sector[j+0x1f]<<24;
+ 264   4                              first_add+=(unsigned long)(initial_cluster-2)*sectors_per_cluster<<9;
+ 265   4                              first_add+=0;
+ 266   4                              *lenght = longitud;
+ 267   4                              return (first_add);
+ 268   4                              }
+ 269   3                      }
+ 270   2      }
+ 271   1      
+ 272   1      
+ 273   1      
+ 274   1      return((unsigned long)0);
+ 275   1      }
+ 276          
+ 277          
+ 278          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1183    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4      53
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

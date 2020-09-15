@@ -1,0 +1,297 @@
+Release 14.7 Drc P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Wed Feb 19 17:25:45 2020
+
+drc -z Dynapse_BioRob_top.ncd Dynapse_BioRob_top.pcf
+
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_3/U_AER_FIFO/uut/Mram_RAM1_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_3/U_AER_FIFO/uut/Mram_RAM2_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_3/U_AER_FIFO/uut/Mram_RAM4_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_3/U_AER_FIFO/uut/Mram_RAM3_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_2/U_AER_FIFO/uut/Mram_RAM3_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_2/U_AER_FIFO/uut/Mram_RAM1_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_2/U_AER_FIFO/uut/Mram_RAM2_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_2/U_AER_FIFO/uut/Mram_RAM4_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_1/U_AER_FIFO/uut/Mram_RAM2_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_1/U_AER_FIFO/uut/Mram_RAM1_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_1/U_AER_FIFO/uut/Mram_RAM3_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_1/U_AER_FIFO/uut/Mram_RAM4_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_0/U_AER_FIFO/uut/Mram_RAM3_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_0/U_AER_FIFO/uut/Mram_RAM4_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_0/U_AER_FIFO/uut/Mram_RAM2_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_DISTRIBUTED_MONITOR_MODULE_0/U_AER_FIFO/uut/Mram_RAM1_RAMD_O>
+   is incomplete. The signal does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM57_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM56_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM61_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM58_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM54_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM50_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM59_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM60_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM55_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM49_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM51_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM53_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM64_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM62_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM52_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM44_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM7_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM8_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM16_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM2_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM3_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM9_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM5_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM10_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM77_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM80_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM65_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM69_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM74_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM67_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM42_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM1_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM6_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM73_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM78_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM71_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM72_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM68_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM76_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM14_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM15_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM13_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM11_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM4_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM21_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM12_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM26_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM63_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM79_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM75_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM66_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM41_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM70_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM43_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM37_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM30_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM45_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM22_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM25_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM36_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM48_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM33_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM34_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM35_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM38_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM31_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM28_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM20_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM24_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM46_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM39_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM19_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM23_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM32_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM29_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM27_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM18_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM17_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM47_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+WARNING:PhysDesignRules:367 - The signal
+   <AER_MON/U_AER_OUT/U_fifo/uut/Mram_RAM40_RAMD_O> is incomplete. The signal
+   does not drive any load pins in the design.
+DRC detected 0 errors and 96 warnings.  Please see the previously displayed
+individual error or warning messages for more details.

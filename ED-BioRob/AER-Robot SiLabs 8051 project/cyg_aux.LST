@@ -1,0 +1,301 @@
+C51 COMPILER V7.06   CYG_AUX                                                               09/12/2019 10:41:16 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE CYG_AUX
+OBJECT MODULE PLACED IN cyg_aux.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\c51.exe cyg_aux.c DB OE
+
+stmt level    source
+
+   1          
+   2          
+   3          //-----------------------------------------------------------------------------
+   4          // Includes
+   5          //-----------------------------------------------------------------------------
+   6          
+   7          #include "c8051f320.h"                 // SFR declarations
+   8          #include <intrins.h>
+   9          #include <stdio.h>
+  10          #include "cyg_aux.h"
+  11          #include "MMC.h"
+  12          #include "SPIMaster.h"
+  13          #include "USB_REGISTER.h"
+  14          #include "USB_MAIN.h"
+  15          #include "USB_DESCRIPTOR.h"
+  16          
+  17          
+  18          //-----------------------------------------------------------------------------
+  19          // 16-bit SFR Definitions for 'F32x
+  20          //-----------------------------------------------------------------------------
+  21          
+  22          sfr16 DP       = 0x82;                 // data pointer
+  23          sfr16 TMR2RL   = 0xca;                 // Timer2 reload value
+  24          sfr16 TMR2     = 0xcc;                 // Timer2 counter
+  25          sfr16 TMR3     = 0x94;                 // Timer3 counter
+  26          sfr16 TMR3RL   = 0x92;                 // Timer3 reload value
+  27          sfr16 PCA0CP0  = 0xfb;                 // PCA0 Module 0 Capture/Compare
+  28          sfr16 PCA0CP1  = 0xe9;                 // PCA0 Module 1 Capture/Compare
+  29          sfr16 PCA0CP2  = 0xeb;                 // PCA0 Module 2 Capture/Compare
+  30          sfr16 PCA0CP3  = 0xed;                 // PCA0 Module 3 Capture/Compare
+  31          sfr16 PCA0CP4  = 0xfd;                 // PCA0 Module 4 Capture/Compare
+  32          sfr16 PCA0     = 0xf9;                 // PCA0 counter
+  33          sfr16 ADC0     = 0xbd;                 // ADC Data Word Register
+  34          sfr16 ADC0GT   = 0xc3;                 // ADC0 Greater-Than
+  35          sfr16 ADC0LT   = 0xc5;                 // ADC0 Less-Than
+  36          
+  37          
+  38          
+  39          
+  40          
+  41          //-----------------------------------------------------------------------------
+  42          // Global VARIABLES
+  43          //-----------------------------------------------------------------------------
+  44          extern code const BYTE String2Desc[STR2LEN];
+  45          extern code const BYTE String2DescF[STR2LEN];
+  46          
+  47          
+  48          //Buffer for MMC data
+  49          // char xdata datos_mem[512];
+  50          
+  51          //-----------------------------------------------------------------------------
+  52          // MAIN Routine
+  53          //-----------------------------------------------------------------------------
+  54          
+  55          //void main (void) {
+C51 COMPILER V7.06   CYG_AUX                                                               09/12/2019 10:41:16 PAGE 2   
+
+  56          
+  57                  
+  58          
+  59            
+  60             // Disable Watchdog timer
+  61          //   PCA0MD &= ~0x40;                    // WDTE = 0 (clear watchdog timer
+  62                                                 // enable)
+  63          //   PORT_Init();                        // Initialize Port I/O
+  64          //   Init_MMC_Ports();
+  65          //   SYSCLK_Init ();                     // Initialize Oscillator
+  66          
+  67           
+  68          //  Timer2_Init(SYSCLK/TIMER2_RATE);    // Init Timer 2
+  69          //   UART0_Init();
+  70          //}
+  71          
+  72          //-----------------------------------------------------------------------------
+  73          // Initialization Subroutines
+  74          //-----------------------------------------------------------------------------
+  75          extern char num_sensor;
+  76          //ADC0_Init
+  77          //   AMX0P   AMX0N    FC(limit switch)
+  78          //  4 P1.4   5 P1.5    RY
+  79          //  6 P1.6   7 P1.7    LY
+  80          //  8 P2.0   9 P2.1    RX
+  81          //  A P2.2   B P2.3    LX
+  82          //  C P2.4   D P2.5    Base
+  83          
+  84          void ADC0_Init(void) 
+  85          {
+  86   1         AMX0P = 4;
+  87   1         AMX0N = 5;  
+  88   1         ADC0CF= 0;
+  89   1         ADC0CN= 0x80;
+  90   1         AD0BUSY=1;
+  91   1         num_sensor=0;
+  92   1         //EIE1 |= 0x08;
+  93   1      }
+  94          
+  95          
+  96          //-----------------------------------------------------------------------------
+  97          // PORT_Init
+  98          //-----------------------------------------------------------------------------
+  99          //
+ 100          // Configure the Crossbar and GPIO ports.
+ 101          //
+ 102          // P0.4 - UART TX
+ 103          // P0.5 - UART RX
+ 104          // P2.2 - LED
+ 105          
+ 106          void PORT_Init (void)
+ 107          {
+ 108   1       
+ 109   1                                             // weak pull-ups
+ 110   1         SPI0CFG   = 0x60;//SPI
+ 111   1          SPI0CN    = 0x01;
+ 112   1          SPI0CKR   = 0x01; //0x01
+ 113   1      //      AMX0P=0x00;     //ADC
+ 114   1      //      AMX0N     = 0x1F;
+ 115   1      //    ADC0CN    = 0x80; 
+ 116   1              P0MDOUT=0x0d;   
+ 117   1      
+C51 COMPILER V7.06   CYG_AUX                                                               09/12/2019 10:41:16 PAGE 3   
+
+ 118   1              // P0.0  -  SCK  (SPI0), Open-Drain, Digital
+ 119   1          // P0.1  -  MISO (SPI0), Open-Drain, Digital
+ 120   1          // P0.2  -  MOSI (SPI0), Open-Drain, Digital
+ 121   1          // P0.3  -  NSS,  Open-Drain, Digital
+ 122   1          // P0.4  -  STR,  Open-Drain, Digital
+ 123   1          // P0.5  -  RST_FPGA,  Open-Drain, Digital
+ 124   1          // P0.6  -  Unassigned,  Open-Drain, Digital
+ 125   1          // P0.7  -  Unassigned,  Open-Drain, Digital
+ 126   1      
+ 127   1          // P1.0  -  Skipped,     Open-Drain, Analog
+ 128   1          // P1.1  -  Skipped,     Open-Drain, Analog
+ 129   1          // P1.2  -  Skipped,     Open-Drain, Analog
+ 130   1          // P1.3  -  Skipped,     Open-Drain, Analog
+ 131   1          // P1.4  -  Skipped,     Open-Drain, Analog
+ 132   1          // P1.5  -  Skipped,     Open-Drain, Analog
+ 133   1          // P1.6  -  Skipped,     Open-Drain, Analog
+ 134   1          // P1.7  -  Skipped,     Open-Drain, Analog
+ 135   1          // P2.0  -  Skipped,     Open-Drain, Analog
+ 136   1          // P2.1  -  Skipped,     Open-Drain, Analog
+ 137   1          // P2.2  -  Skipped,     Open-Drain, Analog
+ 138   1          // P2.3  -  Skipped,     Open-Drain, Analog
+ 139   1      
+ 140   1          P1MDIN    = 0xFF;
+ 141   1          P2MDIN    = 0xFF;
+ 142   1          P1SKIP    = 0x00;
+ 143   1          P2SKIP    = 0x00;
+ 144   1          XBR0      = 0x02;
+ 145   1          XBR1      = 0x40;
+ 146   1      
+ 147   1      
+ 148   1      }
+ 149          
+ 150          //-----------------------------------------------------------------------------
+ 151          // SYSCLK_Init
+ 152          //-----------------------------------------------------------------------------
+ 153          //
+ 154          // This routine initializes the system clock to use the internal oscillator
+ 155          // at its maximum frequency.
+ 156          // Also enables the Missing Clock Detector and VDD monitor.
+ 157          //
+ 158          void SYSCLK_Init(void)
+ 159          {
+ 160   1      #ifdef _USB_LOW_SPEED_
+              
+                 OSCICN |= 0x03;                       // Configure internal oscillator for
+                                                       // its maximum frequency and enable
+                                                       // missing clock detector
+              
+                 CLKSEL  = SYS_INT_OSC;                // Select System clock
+                 CLKSEL |= USB_INT_OSC_DIV_2;          // Select USB clock
+              #else
+ 169   1         OSCICN |= 0x03;                       // Configure internal oscillator for
+ 170   1                                               // its maximum frequency and enable
+ 171   1                                               // missing clock detector
+ 172   1      
+ 173   1         CLKMUL  = 0x00;                       // Select internal oscillator as 
+ 174   1                                               // input to clock multiplier
+ 175   1      
+ 176   1         CLKMUL |= 0x80;                       // Enable clock multiplier
+ 177   1         CLKMUL |= 0xC0;                       // Initialize the clock multiplier
+ 178   1         Delay();                              // Delay for clock multiplier to begin
+ 179   1      
+C51 COMPILER V7.06   CYG_AUX                                                               09/12/2019 10:41:16 PAGE 4   
+
+ 180   1         while(!(CLKMUL & 0x20));                // Wait for multiplier to lock
+ 181   1         CLKSEL  = SYS_INT_OSC;                // Select system clock  
+ 182   1         CLKSEL |= USB_4X_CLOCK;               // Select USB clock
+ 183   1      #endif  /* _USB_LOW_SPEED_ */ 
+ 184   1      }
+ 185          
+ 186          
+ 187          void Delay(void)
+ 188          {
+ 189   1         int x;
+ 190   1         for(x = 0;x < 500;x)
+ 191   1            x++;
+ 192   1      }
+ 193          
+ 194          //-------------------------
+ 195          // Usb0_Init
+ 196          //-------------------------
+ 197          // USB Initialization
+ 198          // - Initialize USB0
+ 199          // - Enable USB0 interrupts
+ 200          // - Enable USB0 transceiver
+ 201          // - Enable USB0 with suspend detection
+ 202          //
+ 203          void Usb0_Init(void)
+ 204          {
+ 205   1         if (String2DescF[0]==0xFF && String2DescF[1]==0xFF) 
+ 206   1                      CopyDescStr((char *)(String2Desc)); //Cadena 2 no inicializada
+ 207   1         POLL_WRITE_BYTE(POWER,  0x08);          // Force Asynchronous USB Reset
+ 208   1         POLL_WRITE_BYTE(IN1IE,  0x07);          // Enable Endpoint 0-2 in interrupts
+ 209   1         POLL_WRITE_BYTE(OUT1IE, 0x07);          // Enable Endpoint 0-2 out interrupts
+ 210   1         POLL_WRITE_BYTE(CMIE,   0x07);          // Enable Reset, Resume, and Suspend interrupts
+ 211   1      #ifdef _USB_LOW_SPEED_
+                 USB0XCN = 0xC0;                         // Enable transceiver; select low speed
+                 POLL_WRITE_BYTE(CLKREC, 0xA0);          // Enable clock recovery; single-step mode
+                                                         // disabled; low speed mode enabled
+              #else                                      
+ 216   1         USB0XCN = 0xE0;                         // Enable transceiver; select full speed
+ 217   1         POLL_WRITE_BYTE(CLKREC, 0x80);          // Enable clock recovery, single-step mode
+ 218   1                                                 // disabled
+ 219   1      #endif /* _USB_LOW_SPEED_ */
+ 220   1      
+ 221   1         EIE1 |= 0x02;                           // Enable USB0 Interrupts
+ 222   1         EA = 1;                                 // Global Interrupt enable
+ 223   1                                                 // Enable USB0 by clearing the USB Inhibit bit
+ 224   1         POLL_WRITE_BYTE(POWER,  0x01);          // and enable suspend detection
+ 225   1      }
+ 226          
+ 227          void CopyDescStr(char *pread) small
+ 228          {
+ 229   1              char    EA_Save;                                        //      Used to save state of global interrupt enable
+ 230   1              char    xdata *pwrite;                  //      Write Pointer                           //      Read Pointer
+ 231   1              unsigned char   x;                                                      //      Counter for 0-512 bytes
+ 232   1              unsigned char   str2len;
+ 233   1              //pread =       (BYTE *)(String2Desc);
+ 234   1              EA_Save =       EA;                                             //      Save EA
+ 235   1              EA      =       0;
+ 236   1              str2len= *pread;                                                        //      Turn off interrupts
+ 237   1              pwrite  =       (char xdata *)(String2DescF);
+ 238   1              PSCTL   =       0x01;                                   //      Enable flash writes
+ 239   1              for(x = 0;      x<str2len;      x++)//  Write 512 bytes
+ 240   1              {
+ 241   2                      FLKEY   =       0xA5;                           //      Write flash key sequence
+C51 COMPILER V7.06   CYG_AUX                                                               09/12/2019 10:41:16 PAGE 5   
+
+ 242   2                      FLKEY   =       0xF1;
+ 243   2                      *pwrite =       *pread;                         //      Write data byte to flash
+ 244   2      
+ 245   2                      pread++;                                                //      Increment pointers
+ 246   2                      pwrite++;
+ 247   2              }
+ 248   1              PSCTL   =       0x00;                                   //      Disable flash writes
+ 249   1              EA      =       EA_Save;                                        //      Restore EA
+ 250   1      }
+ 251          
+ 252          void    Page_Erase(char*        Page_Address)   small
+ 253          {
+ 254   1              char    EA_Save;                                        //      Used to save state of global interrupt enable
+ 255   1              char    xdata   *pwrite;                        //      xdata pointer used to generate movx intruction
+ 256   1              
+ 257   1              pwrite  =       (char xdata *)(Page_Address);   //      Set write pointer to Page_Address
+ 258   1              EA_Save =       EA;                                             //      Save current EA
+ 259   1      //      EA      =       0;                                                      //      Turn off interrupts
+ 260   1              
+ 261   1              PSCTL   =       0x03;                                   //      Enable flash erase and writes
+ 262   1      
+ 263   1              FLKEY   =       0xA5;                                   //      Write flash key sequence to FLKEY
+ 264   1              FLKEY   =       0xF1;
+ 265   1              *pwrite =       0x00;                                   //      Erase flash page using a write command
+ 266   1      
+ 267   1              PSCTL   =       0x00;                                   //      Disable flash erase and writes
+ 268   1      //      EA      =       EA_Save;                                        //      Restore state of EA
+ 269   1              
+ 270   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    279    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
