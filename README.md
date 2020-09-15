@@ -19,5 +19,7 @@ The following folders contain VHDL circuit description that can be synthesized a
 
 8. Spike-based PID motor controller: This folder contains a set of VHDL files that implements a PID controller for DC motors in the spike-domain, using as a principle the PFM (pulse frequency modulation) instead of the classic PWM (pulse width modulation) to power the motors. This approach avoid latencies in converting the control signal to PWM and save power.
 
+9. ED-BioRob: This folder contains all the VHDL, microcontroller and Java files used for adapting the SPID to control the nacked BioRob X5 at CITEC (University of Bielefeld) in 2018 during a "Salvador de Madariaga" research visit.
+
 Please, reference the work included in each README.md file of each folder, and conctact the authors for any question or collaboration.
 
